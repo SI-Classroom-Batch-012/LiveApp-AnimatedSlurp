@@ -29,11 +29,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         loadData()
     }
 
-    fun loadData() {
+    private fun loadData() {
         viewModelScope.launch {
             _loading.value = ApiStatus.LOADING
             try {
-                repository.getDrinks()
+                val drinks = repository.getDrinksFromAPI()
+                repository.insertDrinksToDB(drinks)
                 _loading.value = ApiStatus.DONE
             } catch (e: Exception) {
                 Log.e(TAG, "Error loading Data $e")
@@ -45,6 +46,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
     fun updateDrinks(drinkList: List<Drink>) {
         viewModelScope.launch {
             try {

@@ -16,6 +16,4 @@ interface DrinkDatabaseDao {
     @Update
     suspend fun updateDrinks(drinks: List<Drink>)
 
-    @Query("DELETE from Drink")
-    fun deleteAll()
 }

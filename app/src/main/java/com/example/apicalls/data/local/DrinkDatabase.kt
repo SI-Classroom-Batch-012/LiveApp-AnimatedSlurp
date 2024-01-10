@@ -8,13 +8,11 @@ import com.example.apicalls.data.datamodels.Drink
 
 @Database(entities = [Drink::class], version = 1)
 abstract class DrinkDatabase : RoomDatabase() {
-
     abstract val drinkDatabaseDao: DrinkDatabaseDao
 }
 
 private lateinit var INSTANCE: DrinkDatabase
 
-// if there's no Database a new one is built
 fun getDatabase(context: Context): DrinkDatabase {
     synchronized(DrinkDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
@@ -22,8 +20,7 @@ fun getDatabase(context: Context): DrinkDatabase {
                 context.applicationContext,
                 DrinkDatabase::class.java,
                 "drink_database"
-            )
-                .build()
+            ).build()
         }
     }
     return INSTANCE

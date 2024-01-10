@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.apicalls.adapter.ItemAdapter
 import com.example.apicalls.databinding.FragmentHomeBinding
+import com.example.apicalls.adapter.ItemAdapter
 
 class HomeFragment : Fragment() {
 
@@ -15,15 +15,13 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    lateinit var imageListAdapter: ItemAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater)
         return binding.root
     }
 
@@ -32,7 +30,7 @@ class HomeFragment : Fragment() {
 
         val imageList = binding.imageList
 
-        imageListAdapter = ItemAdapter(requireContext(), emptyList())
+        val imageListAdapter = ItemAdapter(emptyList())
 
         imageList.adapter = imageListAdapter
 
@@ -60,7 +58,9 @@ class HomeFragment : Fragment() {
     }
 
     override fun onStop() {
-        viewModel.updateDrinks(imageListAdapter.dataset)
+        viewModel.drinks.value?.let {
+            viewModel.updateDrinks(it)
+        }
         super.onStop()
     }
 }
