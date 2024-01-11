@@ -52,11 +52,13 @@ class ItemAdapter(
             transformations(RoundedCornersTransformation(10f))
         }
 
+        // ScaleY = Stretchen oben unten           AnimationsTyp, Start, Ende
         val animator = ObjectAnimator.ofFloat(hCard, View.SCALE_Y, 0f, 1f)
         animator.duration = 800
         animator.start()
 
         holder.binding.listCard.setOnClickListener {
+            // RotationY = object horizontal rotieren                  Start, Ende
             val rotator = ObjectAnimator.ofFloat(hCard, View.ROTATION_Y, 0f, 360f)
             rotator.duration = 600
 
@@ -66,13 +68,15 @@ class ItemAdapter(
                 ContextCompat.getColor(context, R.color.salmon)
             }
 
+            // OfArgb = farbe verändern
             val colorizer = ObjectAnimator.ofArgb(
                 hCard,
                 "cardBackgroundColor",
                 color
             )
             colorizer.duration = 700
-
+            
+            // Zwei animationen auf einmal abspielen.
             val set = AnimatorSet()
             set.playTogether(rotator, colorizer)
             set.start()
